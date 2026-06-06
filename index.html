@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Navbar Animada</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
+</head>
+<body>
+ 
+  <div class="nav-demo">
+    <nav class="navbar" id="navbar">
+      <div class="slider" id="slider"></div>
+ 
+      <div class="nav-item active" data-index="0">
+        <i class="ti ti-home"></i> Home
+      </div>
+      <div class="nav-item" data-index="1">
+        <i class="ti ti-rss"></i> Blog
+      </div>
+      <div class="nav-item" data-index="2">
+        <i class="ti ti-code"></i> Code
+      </div>
+      <div class="nav-item" data-index="3">
+        <i class="ti ti-mail"></i> Help
+      </div>
+      <div class="nav-item" data-index="4">
+        <i class="ti ti-user"></i> About
+      </div>
+    </nav>
+  </div>
+ 
+  <script>
+    const navbar = document.getElementById('navbar');
+    const slider = document.getElementById('slider');
+    const items = navbar.querySelectorAll('.nav-item');
+ 
+    function moveSlider(el) {
+      const navRect = navbar.getBoundingClientRect();
+      const elRect = el.getBoundingClientRect();
+      slider.style.left = (elRect.left - navRect.left) + 'px';
+      slider.style.width = elRect.width + 'px';
+    }
+ 
+    items.forEach(item => {
+      item.addEventListener('mouseenter', () => {
+        items.forEach(i => i.classList.remove('active'));
+        item.classList.add('active');
+        moveSlider(item);
+      });
+    });
+ 
+    navbar.addEventListener('mouseleave', () => {
+      const first = navbar.querySelector('[data-index="0"]');
+      items.forEach(i => i.classList.remove('active'));
+      first.classList.add('active');
+      moveSlider(first);
+    });
+ 
+    const initial = navbar.querySelector('[data-index="0"]');
+    requestAnimationFrame(() => moveSlider(initial));
+  </script>
+ 
+</body>
+</html>
+ 
